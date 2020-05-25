@@ -9,7 +9,7 @@ export default function isISIN(str: any) {
     return false;
   }
 
-  const checksumStr = str.replace(/[A-Z]/g, character => (parseInt(character, 36)));
+  const checksumStr = str.replace(/[A-Z]/g, (character: string) => (parseInt(character, 36)));
 
   let sum = 0;
   let digit;

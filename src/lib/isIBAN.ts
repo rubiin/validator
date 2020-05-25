@@ -5,7 +5,7 @@ import assertString from './util/assertString.ts';
  * corresponding IBAN regular expression
  * Reference: https://en.wikipedia.org/wiki/International_Bank_Account_Number
  */
-const ibanRegexThroughCountryCode = {
+const ibanRegexThroughCountryCode : {[key: string]:RegExp} = {
   AD: /^(AD[0-9]{2})\d{8}[A-Z0-9]{12}$/,
   AE: /^(AE[0-9]{2})\d{3}\d{16}$/,
   AL: /^(AL[0-9]{2})\d{8}[A-Z0-9]{16}$/,
@@ -93,7 +93,7 @@ const ibanRegexThroughCountryCode = {
  * @param {string} str - string under validation
  * @return {boolean}
  */
-function hasValidIbanFormat(str: string) {
+function hasValidIbanFormat(str: string): boolean {
   // Strip white spaces and hyphens
   const strippedStr = str.replace(/[\s\-]+/gi, '').toUpperCase();
   const isoCountryCode = strippedStr.slice(0, 2).toUpperCase();
@@ -115,7 +115,7 @@ function hasValidIbanFormat(str: string) {
    * @param {string} str
    * @return {boolean}
    */
-function hasValidIbanChecksum(str: string) {
+function hasValidIbanChecksum(str: any) {
   const strippedStr = str.replace(/[^A-Z0-9]+/gi, '').toUpperCase(); // Keep only digits and A-Z latin alphabetic
   const rearranged = strippedStr.slice(4) + strippedStr.slice(0, 4);
   const alphaCapsReplacedWithDigits = rearranged.replace(/[A-Z]/g, (char: string) => char.charCodeAt(0) - 55);
@@ -126,7 +126,7 @@ function hasValidIbanChecksum(str: string) {
   return remainder === 1;
 }
 
-export default function isIBAN(str: string) {
+export default function isIBAN(str: any) {
   assertString(str);
 
   return hasValidIbanFormat(str) && hasValidIbanChecksum(str);

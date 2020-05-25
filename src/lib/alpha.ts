@@ -64,7 +64,7 @@ export const decimal : any = {
 };
 
 
-export const englishLocales = ['AU', 'GB', 'HK', 'IN', 'NZ', 'ZA', 'ZM'];
+export const englishLocales : Array<string> = ['AU', 'GB', 'HK', 'IN', 'NZ', 'ZA', 'ZM'];
 
 for (let locale: string, i = 0; i < englishLocales.length; i++) {
   locale = `en-${englishLocales[i]}`;

@@ -1,3 +1,3 @@
-const includes = (arr: string[], val: string) => arr.some((arrVal: string) => val === arrVal);
+const includes = (arr, val) => arr.some(arrVal => val === arrVal);
 
 export default includes;

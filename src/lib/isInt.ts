@@ -1,24 +1,26 @@
-import assertString from './util/assertString.ts';
+interface Options {
+    max?: number;
+    min?: number;
+    gt?: number;
+    lt?: number;
+    allow_leading_zeroes: boolean;
+}
 
-const int = /^(?:[-+]?(?:0|[1-9][0-9]*))$/;
-const intLeadingZeroes = /^[-+]?[0-9]+$/;
+const defaultOptions: Options = {
+    allow_leading_zeroes: true
+}
 
-export default function isInt(str: string , options: { hasOwnProperty?: any; allow_leading_zeroes?: any; min?: any; max?: any; lt?: any; gt?: any; }) {
-  assertString(str);
-  options = options || {};
+let int: RegExp = /^[-+]?(0|[1-9][0-9]*)$/;
+let intLeadingZeros: RegExp = /^[-+]?[0-9]+$/;
 
-  // Get the regex to use for testing, based on whether
-  // leading zeroes are allowed or not.
-  let regex = (
-    options.hasOwnProperty('allow_leading_zeroes') && !options.allow_leading_zeroes ?
-      int : intLeadingZeroes
-  );
+export default function isInt(str: string, options: Options = defaultOptions): boolean {
+    let regex: RegExp = options.allow_leading_zeroes ? intLeadingZeros : int;
+    
+    let regexTestPassed: boolean = regex.test(str);
+    let minTestPassed: boolean = options.min ? parseInt(str, 10) >= options.min : true;
+    let maxTestPassed: boolean = options.max ? parseInt(str, 10) <= options.max : true;
+    let ltTestPassed: boolean = options.lt ? parseInt(str, 10) < options.lt : true;
+    let gtTestPassed: boolean = options.gt ? parseInt(str, 10) > options.gt : true;
 
-  // Check min/max/lt/gt
-  let minCheckPassed = (!options.hasOwnProperty('min') || str >= options.min);
-  let maxCheckPassed = (!options.hasOwnProperty('max') || str <= options.max);
-  let ltCheckPassed = (!options.hasOwnProperty('lt') || str < options.lt);
-  let gtCheckPassed = (!options.hasOwnProperty('gt') || str > options.gt);
-
-  return regex.test(str) && minCheckPassed && maxCheckPassed && ltCheckPassed && gtCheckPassed;
+    return regexTestPassed && minTestPassed && maxTestPassed && ltTestPassed && gtTestPassed;
 }

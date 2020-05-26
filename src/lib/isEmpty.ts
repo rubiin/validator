@@ -1,13 +1,12 @@
-import assertString from './util/assertString.ts';
-import merge from './util/merge.ts';
+interface Options {
+    ignore_whitespace?: boolean;
+}
 
-const default_is_empty_options = {
-  ignore_whitespace: false,
-};
+const defaultOptions:Options = {
+    ignore_whitespace: false
+}
 
-export default function isEmpty(str:string, options: { ignore_whitespace: any; }) {
-  assertString(str);
-  options = merge(options, default_is_empty_options);
-
-  return (options.ignore_whitespace ? str.trim().length : str.length) === 0;
+export default function isEmpty(str: string, options: Options = defaultOptions): boolean {
+    str = options.ignore_whitespace ? str.trim() : str;
+    return str.length === 0;
 }

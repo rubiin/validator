@@ -1,46 +1,28 @@
-import equals from './src/lib/equals.ts';
-import contains from './src/lib/contains.ts';
-import blacklist from "./src/lib/blacklist.ts";
-import escape from "./src/lib/escape.ts";
-
 // validator version
-const version = "1.0.0";
+const version = "1.0.0-beta";
 
-// validators
-import isAlpha, { locales as isAlphaLocales } from './src/lib/isAlpha.ts';
-import isAlphanumeric, { locales as isAlphanumericLocales } from './src/lib/isAlphanumeric.ts';
-import isAscii from "./src/lib/isAscii.ts";
-import isBase32 from "./src/lib/isBase32.ts";
-import isEmpty from "./src/lib/isEmpty.ts";
-import isFullWidth from "./src/lib/isFullWidth.ts";
-import isHalfWidth from "./src/lib/isHalfWidth.ts";
-import isInt from "./src/lib/isInt.ts";
-import isLowerCase from "./src/lib/isLowerCase.ts";
-import isUpperCase from "./src/lib/isUpperCase.ts";
+import * as validatorInterface from './src/interface/mod.ts';
+import {validator} from './src/lib/mod.ts';
 
-// For testing (resolving keys as string)
-interface ValidatorMap {
-  [key: string]: any
-}
+import {locales as isAlphaLocales,} from "./src/lib/isAlpha.ts";
+import {locales as isAlphanumericLocales,} from "./src/lib/isAlphanumeric.ts";
+import {locales as postalCodeLocales,} from "./src/lib/isPostalCode.ts";
+import {locales as mobilePhoneLocales,} from "./src/lib/isMobilePhone.ts";
+import {locales as identityCardLocales,} from './src/lib/isIdentityCard.ts'
 
-const validator : ValidatorMap = {
-  equals,
-  contains,
-  blacklist,
-  escape,
-  isAlpha,
-  isAlphaLocales,
-  isAlphanumeric,
-  isAlphanumericLocales,
-  isAscii,
-  isBase32,
-  isEmpty,
-  isFullWidth,
-  isHalfWidth,
-  isInt,
-  isLowerCase,
-  isUpperCase,
-  version
+const locales = {
+    isAlphaLocales,
+    isAlphanumericLocales,
+    mobilePhoneLocales,
+    postalCodeLocales,
+    identityCardLocales
 };
 
-export default validator;
+export {
+    validator,
+    validatorInterface,
+    locales,
+    version
+}
+// export validator;
+

@@ -1,8 +1,15 @@
-import assertString from './util/assertString.ts';
+import isBase64 from "./isBase64.ts";
 
-const jwt: RegExp = /^([A-Za-z0-9\-_~+\/]+[=]{0,2})\.([A-Za-z0-9\-_~+\/]+[=]{0,2})(?:\.([A-Za-z0-9\-_~+\/]+[=]{0,2}))?$/;
+export default function isJWT(str: string): boolean {
+  const dotSplit: Array<string> = str.split(".");
+  const len: number = dotSplit.length;
 
-export default function isJWT(str: string): boolean  {
-  assertString(str);
-  return jwt.test(str);
+  if (len > 3 || len < 2) {
+    return false;
+  }
+
+  return dotSplit.reduce(
+    (acc: boolean, currElem) => acc && isBase64(currElem, { urlSafe: true }),
+    true,
+  );
 }

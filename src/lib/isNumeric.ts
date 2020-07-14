@@ -1,15 +1,12 @@
-import assertString from './util/assertString.ts';
+import {IsNumericOptions} from "../interface/isNumericOptions.ts";
 
 const numeric: RegExp = /^[+-]?([0-9]*[.])?[0-9]+$/;
 const numericNoSymbols: RegExp = /^[0-9]+$/;
 
-interface isNumericOptions { 
-  no_symbols?: boolean;
-}
-
-
-export default function isNumeric(str: string, options: isNumericOptions ):boolean {
-  assertString(str);
+export default function isNumeric(
+  str: string,
+  options: IsNumericOptions,
+): boolean {
   if (options && options.no_symbols) {
     return numericNoSymbols.test(str);
   }
